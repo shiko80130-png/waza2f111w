@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تم قبولك مبدئيًا</title>
+
+  <!-- SEO / Preview -->
+  <meta content="https://i.imgur.com/Psz9qeX.jpg" property="og:image">
+  <link rel="icon" href="https://i.imgur.com/Psz9qeX.jpg">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background: url('https://i.imgur.com/gDeHz6O.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      direction: rtl;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #wrapper {
+      width: 100%;
+      max-width: 600px;
+      padding: 15px;
+    }
+
+    #box {
+      background: rgba(0,0,0,0.7);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .answer {
+      background: #ff5e00;
+      margin: 10px auto;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 90%;
+      max-width: 400px;
+      font-weight: 600;
+    }
+
+    .answer:hover {
+      background: #ff3c00;
+      transform: scale(1.05);
+    }
+
+    .question {
+      display: none;
+    }
+
+    .question.active {
+      display: block;
+    }
+
+    #progress {
+      height: 6px;
+      background: #ff5e00;
+      width: 0%;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    #timer {
+      background: #e74c3c;
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <div id="box">
+
+    <div id="progress"></div>
+
+    <img src="https://i.imgur.com/Psz9qeX.jpg" alt="عرض">
+
+    <div id="timer">⏳ العرض متاح لمدة: <span id="time">60</span> ثانية</div>
+
+    <!-- Q1 -->
+    <div class="question active">
+      <h2>هل تبحث عن فرصة عمل حقيقية الآن؟</h2>
+      <div class="answer" data-next="1">نعم</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question">
+      <h2>هل عمرك فوق 18 سنة؟</h2>
+      <div class="answer" data-next="2">نعم</div>
+      <div class="answer" data-next="2">لا</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question">
+      <h2>حدد جنسك</h2>
+      <div class="answer" data-next="3">ذكر</div>
+      <div class="answer" data-next="3">أنثى</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question">
+      <h2>اختر المجال المناسب لك</h2>
+      <div class="answer" data-next="4">وظائف عامة</div>
+      <div class="answer" data-next="4">عمالة / مهن</div>
+      <div class="answer" data-next="4">مكاتب / استقبال</div>
+    </div>
+
+    <!-- Final -->
+    <div class="question">
+      <h2>🎉 تم قبولك مبدئيًا</h2>
+      <p>اضغط أدناه لإكمال التسجيل خلال 30 ثانية</p>
+      <div class="answer" id="final">إكمال التسجيل الآن</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const questions = document.querySelectorAll('.question');
+  const answers = document.querySelectorAll('.answer');
+  const progress = document.getElementById('progress');
+  let step = 0;
+
+  answers.forEach(btn => {
+    btn.onclick = () => {
+      if (btn.id === 'final') {
+        window.location.href = "PUT_YOUR_CPA_LINK_HERE";
+        return;
+      }
+      questions[step].classList.remove('active');
+      step++;
+      questions[step].classList.add('active');
+      progress.style.width = ((step) / (questions.length - 1)) * 100 + "%";
+    };
+  });
+
+  // Fake timer
+  let time = 60;
+  setInterval(() => {
+    if (time > 0) {
+      time--;
+      document.getElementById('time').innerText = time;
+    }
+  }, 1000);
+
+  // Disable back
+  history.pushState(null, null, location.href);
+  window.onpopstate = () => history.go(1);
+</script>
+
+</body>
+</html>
